@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.example.learn.mapper.GuestbookMapper">
+
+    <resultMap id="guestbookDTOMap" type="com.example.learn.data.dto.GuestbookDTO">
+        <id property="gno" column="gno"/>
+        <result property="gno" column="gno"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="modDate" column="mod_date"/>
+    </resultMap>
+
+    <resultMap id="guestbookEntityMap" type="com.example.learn.data.entity.Guestbook">
+        <id property="gno" column="gno"/>
+        <result property="gno" column="gno"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="modDate" column="mod_date"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="guestbookDTOMap" resultType="GuestbookDTO">
+        SELECT * FROM guestbook
+    </select>
+
+    <select id="getById" resultMap="guestbookEntityMap" resultType="com.example.learn.data.entity.Guestbook">
+        SELECT * FROM guestbook
+        WHERE gno = #{gno}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO
+            guestbook(title, content, writer)
+        VALUES
+            (#{guestbook.title}, #{guestbook.content}, #{guestbook.writer})
+    </insert>
+
+    <update id="update">
+        UPDATE guestbook SET
+            title = #{guestbook.title}
+            , content = #{guestbook.content}
+            , writer = #{guestbook.writer}
+            , mod_date = NOW()
+        WHERE
+            gno = #{guestbook.gno}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM guestbook WHERE gno = #{gno}
+    </delete>
+</mapper>
